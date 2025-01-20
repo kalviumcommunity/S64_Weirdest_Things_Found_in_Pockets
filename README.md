@@ -6,10 +6,10 @@
 
 - **User Submission Form:** Users can add a new item and assign a weirdness level (1-10).
 - **Dynamic Item List:** A display of all submitted items, sorted by weirdness level.
-- Responsive Design: Ensures the application is accessible and visually appealing across devices.
-- Real-Time Updates: Items added by users appear instantly without a page refresh.
-- User Authentication (Future Feature): Allow users to log in and manage their submissions.
-- Search and Filter (Future Feature): Users can search for specific items or filter by weirdness level.
+- **Responsive Design:** Ensures the application is accessible and visually appealing across devices.
+- **Real-Time Updates:** Items added by users appear instantly without a page refresh.
+- **User Authentication:** Allow users to log in and manage their submissions.
+- **Search and Filter:** Users can search for specific items or filter by weirdness level.
 
 # Tech Stack:
 
