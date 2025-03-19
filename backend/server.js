@@ -17,6 +17,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 
 connectDatabase();
 
+
 app.get('/ping', (req, res) => {
     res.send('pong');
     });
