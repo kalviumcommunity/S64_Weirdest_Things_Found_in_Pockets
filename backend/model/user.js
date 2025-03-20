@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Define the user schema for authentication
 const userSchema = new mongoose.Schema({
@@ -49,6 +50,12 @@ const userSchema = new mongoose.Schema({
     default: true
   },
   
+  // For tracking token validity
+  tokenVersion: {
+    type: Number,
+    default: 0
+  },
+  
   // For password reset functionality
   resetPasswordToken: String,
   resetPasswordExpires: Date,
@@ -81,6 +88,55 @@ userSchema.pre('save', async function(next) {
 // Method to verify password for login
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Method to generate JWT token
+userSchema.methods.generateAuthToken = function() {
+  // Create token payload with essential user information
+  const payload = {
+    id: this._id,
+    username: this.username,
+    email: this.email,
+    role: this.role,
+    tokenVersion: this.tokenVersion
+  };
+  
+  // Sign the token with a secret key and set expiration
+  // In production, store JWT_SECRET in environment variables
+  const token = jwt.sign(
+    payload,
+    process.env.JWT_SECRET || 'your_jwt_secret_key',
+    { expiresIn: '24h' } // Token expires in 24 hours
+  );
+  
+  return token;
+};
+
+// Method to invalidate all existing tokens for this user
+userSchema.methods.invalidateTokens = async function() {
+  // Increment token version to invalidate all current tokens
+  this.tokenVersion += 1;
+  return await this.save();
+};
+
+// Static method to verify and decode a token
+userSchema.statics.verifyToken = async function(token) {
+  try {
+    // Verify the token and extract payload
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret_key');
+    
+    // Find the user by ID
+    const user = await this.findById(decoded.id);
+    
+    // Check if user exists and token is still valid
+    if (!user || user.tokenVersion !== decoded.tokenVersion) {
+      return null;
+    }
+    
+    return user;
+  } catch (error) {
+    return null;
+  }
 };
 
 // Create the User model

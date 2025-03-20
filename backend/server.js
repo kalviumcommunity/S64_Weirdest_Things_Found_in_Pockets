@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const userRoutes = require("./routes/userRoutes")
 
 const connectDatabase = require("./db/database");
+
+app.use(cors());
+app.use(express.json());
 
 process.on("uncaughtException", (err) => {
     console.log(`Error: ${err.message}`); // Log the error message
@@ -17,6 +22,8 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 
 connectDatabase();
 
+
+app.use('/api/users', userRoutes);
 
 app.get('/ping', (req, res) => {
     res.send('pong');
