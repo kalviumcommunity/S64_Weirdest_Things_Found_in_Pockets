@@ -1,7 +1,21 @@
 import React from 'react';
-import { Search, UploadCloud, Menu, Umbrella, Key, Paperclip, Ticket, Scissors, CreditCard, Leaf } from 'lucide-react';
+import { Search, UploadCloud, Menu, Umbrella, Key, Paperclip, Ticket, Scissors, CreditCard, Leaf, Image } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const PocketWeirdosLanding = () => {
+  const navigate = useNavigate();
+
+  const handlePocketNavigate = () => {
+    // Redirect to pocket find form
+    navigate('/pocket-finds');
+  }
+
+  const handleGalleryNavigate = () => {
+    // Redirect to gallery page
+    navigate('/pocket-gallery');
+    
+  }
+
   return (
     <div className="min-h-screen bg-purple-100 font-sans relative overflow-hidden">
       {/* Random pocket items scattered in background */}
@@ -102,6 +116,7 @@ const PocketWeirdosLanding = () => {
       <main className="container mx-auto px-4 pt-12 pb-20 relative z-10">
         {/* Hero Section */}
         <div className="text-center mb-16">
+          
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
             Share the Weirdest Things You've Found in Your Pockets!
           </h2>
@@ -110,27 +125,43 @@ const PocketWeirdosLanding = () => {
             Join our community of pocket treasure hunters and share your strangest discoveries.
           </p>
         </div>
-
-        {/* Search Bar */}
-        <div className="max-w-md mx-auto mb-16 relative">
-          <div className="relative">
-            <input 
-              type="text" 
-              placeholder="Search weird pocket findings..." 
-              className="w-full py-3 px-12 rounded-full border-2 border-purple-300 focus:border-purple-500 focus:outline-none shadow-md"
-            />
-            <Search className="absolute left-4 top-3 text-purple-400" size={20} />
-          </div>
-        </div>
-        
-        {/* Post Button */}
         <div className="text-center">
-          <button className="group relative inline-flex items-center justify-center px-8 py-4 text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-500 rounded-full shadow-lg hover:from-purple-700 hover:to-pink-600 transform hover:scale-105 transition-all duration-200">
-            <UploadCloud className="mr-2" size={24} />
+          <button className="group relative inline-flex items-center justify-center px-8 py-4 text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-500 rounded-full shadow-lg hover:from-purple-700 hover:to-pink-600 transform hover:scale-105 transition-all duration-200"
+          onClick={handlePocketNavigate}>
+            <UploadCloud className="mr-2" size={24}/>
             Share Your Pocket Weirdo!
             <span className="absolute -inset-1 rounded-full border-2 border-white opacity-30 group-hover:opacity-100 group-hover:animate-ping transition-all duration-300"></span>
           </button>
           <p className="mt-4 text-sm text-gray-500">No judgment, only curiosity!</p>
+          
+          {/* GALLERY BUTTON */}
+          <button 
+            className="mt-6 relative inline-flex items-center justify-center px-6 py-3 text-lg font-bold rounded-lg shadow-lg transform hover:rotate-2 transition-all duration-300 animate-pulse hover:animate-none overflow-hidden"
+            onClick={handleGalleryNavigate}
+            style={{
+              background: "linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1, #f368e0)",
+              backgroundSize: "400% 400%",
+              animation: "gradientShift 3s ease infinite, bounce 2s infinite"
+            }}
+          >
+            <span className="relative z-10 flex items-center text-white drop-shadow-md">
+              <Image className="mr-2" size={22} />
+              <span className="tracking-wide">EXPLORE THE GALLERY</span>
+            </span>
+            <span className="absolute inset-0 bg-white opacity-25 transform rotate-12"></span>
+            <span className="absolute -inset-2 border-2 border-white opacity-30 rounded-lg"></span>
+          </button>
+          <style jsx>{`
+            @keyframes gradientShift {
+              0% { background-position: 0% 50% }
+              50% { background-position: 100% 50% }
+              100% { background-position: 0% 50% }
+            }
+            @keyframes bounce {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-5px); }
+            }
+          `}</style>
         </div>
         
         {/* Fun Pocket Items */}
@@ -143,7 +174,7 @@ const PocketWeirdosLanding = () => {
               </div>
             </div>
             <h3 className="text-center font-bold text-lg mb-2">Mystery Marble</h3>
-            <p className="text-center text-gray-600 text-sm">Why is there always a marble?</p>
+            <p className="text-center text-gray-600 text-sm">Why is there always a marble?</p> 
           </div>
           
           {/* Pocket Example 2 */}
@@ -151,7 +182,7 @@ const PocketWeirdosLanding = () => {
             <div className="flex justify-center mb-4">
               <div className="w-16 h-20 bg-red-100 rounded-md flex items-center justify-center">
                 <div className="w-12 h-6 bg-green-400 rounded-sm"></div>  
-              </div>
+              </div>     
             </div>
             <h3 className="text-center font-bold text-lg mb-2">Ancient Gum Wrapper</h3>
             <p className="text-center text-gray-600 text-sm">From a flavor long discontinued</p>
