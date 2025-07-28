@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const userRoutes = require("./routes/userRoutes")
+const pocketRoutes = require("./routes/finds")
 
 const connectDatabase = require("./db/database");
 
@@ -24,6 +25,7 @@ connectDatabase();
 
 
 app.use('/api/users', userRoutes);
+app.use('/api/finds', pocketRoutes);
 
 app.get('/ping', (req, res) => {
     res.send('pong');
